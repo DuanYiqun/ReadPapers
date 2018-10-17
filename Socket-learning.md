@@ -41,12 +41,21 @@ int main(int argc, char *argv[])
      int sockfd, newsockfd, portno;
      socklen_t clilen;
      char buffer[256];
+     struct sockaddr_in serv_addr, cli_addr;
+     int n;
+     if (argc < 2) {
+         fprintf(stderr,"ERROR, no port provided\n");
+         exit(1);
+     }
 ```
 
 The int socktfd, newsocketfd means the file descriptor. portno means the port number. 
-Char buffer is actually where to write and read data, limited under 256 bits. 
-If buffer are writed over 256, mostly will got buffer overrun error. 
+Char buffer is actually where to write and read data, limited under 256 bits.   
+If buffer are writed over 256, mostly will got buffer overrun error.   
+At last if there is no port number provided raise error. 
 
-
+```C
+     sockfd = socket(AF_INET, SOCK_STREAM, 0);
+```
 
 
