@@ -83,4 +83,36 @@ htons means host byte order changed to network byte order
               sizeof(serv_addr)) < 0) 
               error("ERROR on binding");
 ```
-this operation actually fill in socket fd with ip address and port number. If the content is blank, return error. 
+this operation actually fill in socket fd with ip address and port number. If the content is blank, return error.
+
+listen(sockfd,5);
+     clilen = sizeof(cli_addr);
+```C
+     listen(sockfd,5);
+     clilen = sizeof(cli_addr);
+     newsockfd = accept(sockfd, 
+                 (struct sockaddr *) &cli_addr, 
+                 &clilen);
+     if (newsockfd < 0) 
+          error("ERROR on accept");
+                 
+```
+This operation means that the sockfd are always listening to a specific port then give it to newsockfd. And tell it who is connected. If newsock haven't receive any connections then raise error. 
+
+```C
+    bzero(buffer,256);
+    n = read(newsockfd,buffer,255);
+    if (n < 0) error("ERROR reading from socket");
+    printf("Here is the message: %s\n",buffer);         
+```
+Firstly read buffer from socket, n tells how much bits receives. 255 in the function restrain the read function from over writing the buffer.   
+If n <0, which means there is actually no bits readed, we raise error. 
+
+
+```C
+    n = write(newsockfd,"I got your message",18);
+    if (n < 0) error("ERROR writing to socket");  
+    close(newsockfd);
+    close(sockfd);
+    return 0; 
+```
