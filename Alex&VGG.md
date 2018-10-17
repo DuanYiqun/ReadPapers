@@ -1,6 +1,6 @@
 
 # Brief review of Alex&VGG
-AlexNet 和 VGG 应该是最早的几篇网络结构方面的论文。 这两篇论文都属于没有任何层级结构的straigh forwardnetwork structures。
+AlexNet 和 VGG 应该是最早的几篇网络结构方面的论文。 这两篇论文都属于比较简单的没有任何层级结构的straigh forwardnetwork structures。
 # AlexNet
 先说 [AlexNet](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf). 在introduction部分， UT的几位作者直接申明了这篇论文和之前最大的不同是在更大的dataset方面进行了训练并获得了优秀的表现。 本文主要用的dataset为ILSVRC-2012（ImageNet），大概包括1.2Million的训练数据。
 在结构方面直接给出结构定义：
