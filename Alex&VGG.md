@@ -116,5 +116,6 @@ cfg = {
 
 这里是给出了一个网络类，以及配置方法，在配置的时候只需要:
 ``` model = VGG(make_layers(cfg['A']), **kwargs)```  
-cfg里面的参数就是每层的通道数以及是否进行downsampling。 在表现方面比AlexNet有大幅提升。不过VGG没有解决当网络结构变得更深的时候如何有效抑制grediant vanishing 和如何有效传递参数的问题。
+cfg里面的参数就是每层的通道数以及是否进行downsampling。 在表现方面比AlexNet有大幅提升。不过VGG没有解决当网络结构变得更深的时候如何有效抑制grediant vanishing 和如何有效传递参数的问题。VGG后来被广泛应用于其他任务的基本特征提取，比如说应用在VQA的module network 和 第一篇natural style transfer当中。
+
 
