@@ -56,6 +56,31 @@ At last if there is no port number provided raise error.
 
 ```C
      sockfd = socket(AF_INET, SOCK_STREAM, 0);
+     if (sockfd < 0) 
+        error("ERROR opening socket");
+     bzero((char *) &serv_addr, sizeof(serv_addr));
 ```
+Here define sockfd want a stream connection, which means it uses TCP and connected oriented. 0 means wipe out the address in ram to prevent ram error. 
+
+```C
+     portno = atoi(argv[1]);
+```
+argv[0] is the name of the program. argv[1] means the first string that passed in. 
+atoi() transfer ASCII to integer. 
+This code give portnumber to main entry. The ports below 1024 are previllage ports in most of the programing languages. The common port number including 5000 9000 8000 in python. 
 
 
+```C
+     serv_addr.sin_family = AF_INET;
+     serv_addr.sin_addr.s_addr = INADDR_ANY;
+     serv_addr.sin_port = htons(portno);
+```
+.sin means socket internet. 
+htons means host byte order changed to network byte order
+
+```C
+     if (bind(sockfd, (struct sockaddr *) &serv_addr,
+              sizeof(serv_addr)) < 0) 
+              error("ERROR on binding");
+```
+this operation actually fill in socket fd with ip address and port number. If the content is blank, return error. 
