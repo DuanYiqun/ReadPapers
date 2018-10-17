@@ -116,3 +116,75 @@ If n <0, which means there is actually no bits readed, we raise error.
     close(sockfd);
     return 0; 
 ```
+
+## Client.c
+The same as server.c so we move faster this time. 
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h> 
+
+void error(const char *msg)
+{
+    perror(msg);
+    exit(0);
+}
+
+int main(int argc, char *argv[])
+{
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+
+    char buffer[256];
+    if (argc < 3) {
+       fprintf(stderr,"usage %s hostname port\n", argv[0]);
+       exit(0);
+    }
+    portno = atoi(argv[2]);
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+        error("ERROR opening socket");
+    server = gethostbyname(argv[1]);
+    if (server == NULL) {
+        fprintf(stderr,"ERROR, no such host\n");
+        exit(0);
+    }
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr, 
+         (char *)&serv_addr.sin_addr.s_addr,
+         server->h_length);
+    serv_addr.sin_port = htons(portno);
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+        error("ERROR connecting");
+    printf("Please enter the message: ");
+    bzero(buffer,256);
+    fgets(buffer,255,stdin);
+    n = write(sockfd,buffer,strlen(buffer));
+    if (n < 0) 
+         error("ERROR writing to socket");
+    bzero(buffer,256);
+    n = read(sockfd,buffer,255);
+    if (n < 0) 
+         error("ERROR reading from socket");
+    printf("%s\n",buffer);
+    close(sockfd);
+    return 0;
+}
+```
+The only difference server = gethostbyname(argv[1]);   
+Actually we send domain name and gethostbyname() return the IP.   
+And client firstly write then read, the server firstly read then write.
+
+## 总结
+用中文总结一下，socket 主要有四个关键参数，第一个是socketfd即file descriptor。 第二和第三个是socket table和 一系列IP address，port number， 第四个是DNS解析，即给定域名，返回一个IP地址。 主要的流程为不断地尝试操作，如果不可行则抛出错误的过程。 在连接方面使用TCP连接。在操作时要特别注意buffer溢出的问题。在client端，系统是先写后读，在server端是先读后写。
+
+
+
