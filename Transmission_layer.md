@@ -39,6 +39,10 @@ UDP doesn't give any advanced features but only the end to end network. UDP is c
 UDP header:  
 Each content is 16 bits wide. It looks like below:       
 
-Source port (optional) |  Destination port 
- Length (Data)       |  checksum (Optional for IPV4) 
+| Content                | content                      |
+|------------------------|------------------------------|
+| Source port (optional) | Destination port             |
+| Length (Data)          | checksum (Optional for IPV4) |
+
+UDP will actually send data once it received a signal to send data. So real-time application could propably like the UDP protocols.
 
