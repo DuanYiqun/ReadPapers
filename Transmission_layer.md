@@ -13,6 +13,16 @@ This page are mostly talk about the transmission layer.
 Concepts:  
   + _Header_ : Info attached to the head of data.
   + _Segment_ : Sliced pieces of Datagram. 
-Acknowledged : All network is unreliable, so we need to make best effort to make data transfer secure. 
+Acknowledged : All network is unreliable, so we need to make best effort to make data transfer secure.   
+
+Transmission layer should promise:
+ + FLow control : Prevent overwhelming between two devices happens. 
+ + Conjestion control : Prevent one powerful device take others' brandwidth thus make conjestion 
+ + Able to transfer data under unstable network environment.
+ 
+Multiplexing:
+Multiple signal share one channel. 
+Demultiplexing:
+Decode signal from one channel to several signals. 
 
 
