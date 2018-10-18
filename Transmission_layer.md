@@ -21,8 +21,13 @@ Transmission layer should promise:
  + Able to transfer data under unstable network environment.
  
 Multiplexing:
-Multiple signal share one channel. 
+Multiple signal share one channel.    
 Demultiplexing:
-Decode signal from one channel to several signals. 
-
+Decode signal from one channel to several signals.   
+In productive environments, they use port to represent this process.   
+_Ports_ : 
++ Unique identifier
++ Has 16 bits so totally the range of the port number is: 0- 2^16
++ 0-1023 are reserved ports, so we need to use other ports.
+When a socket process is opened, it will be randomly assigne to a specific port.
 
